@@ -54,3 +54,5 @@ end
 group :production do
   gem 'pg' # for Heroku deployment
 end
+
+ruby '3.4.1'
