@@ -2,18 +2,7 @@
 
 <% content_for :title, "Movies" %>
 
-<th>
-  <%= link_to 'Title Ascending', movies_path(sort: 'title', direction: 'asc') %>
-  <%= link_to 'Title Descending', movies_path(sort: 'title', direction: 'desc') %>
-</th>
-<th>
-  <%= link_to 'Rating Ascending', movies_path(sort: 'rating', direction: 'asc') %>
-  <%= link_to 'Rating Descending', movies_path(sort: 'rating', direction: 'desc') %>
-</th>
-<th>
-  <%= link_to 'Release Date Ascending', movies_path(sort: 'release_date', direction: 'asc') %>
-  <%= link_to 'Release Date Descending', movies_path(sort: 'release_date', direction: 'desc') %>
-</th>
+<% sort_class = "sorting_column_" + @sorting_type %>
 
 <h1>Movies</h1>
 
@@ -21,17 +10,41 @@
 <table border="1">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Rating</th>
-      <th>Release Date</th>
+      <th class="<%= sort_class if @sorting_column == 'title' %>">
+        <% if @sorting_column == 'title' && @sorting_type == 'asc' %>
+           <%= link_to 'Title ↑', movies_path(sort: 'title', direction: 'desc') %>
+        <% elsif @sorting_column == 'title' && @sorting_type == 'desc' %>          
+           <%= link_to 'Title ↓', movies_path(sort: 'title', direction: 'asc') %>
+        <% else %>
+          <%= link_to 'Title', movies_path(sort: 'title', direction: 'desc') %>
+        <% end %>
+      </th>
+      <th class="<%= sort_class if @sorting_column == 'rating' %>">
+        <% if @sorting_column == 'rating' && @sorting_type == 'asc' %>
+           <%= link_to 'Rating ↑', movies_path(sort: 'rating', direction: 'desc') %>
+        <% elsif @sorting_column == 'rating' && @sorting_type == 'desc' %>          
+           <%= link_to 'Rating ↓', movies_path(sort: 'rating', direction: 'asc') %>
+        <% else %>
+          <%= link_to 'Rating', movies_path(sort: 'rating', direction: 'desc') %>
+        <% end %>
+      </th>
+      <th class="<%= sort_class if @sorting_column == 'release_date' %>">
+        <% if @sorting_column == 'release_date' && @sorting_type == 'asc' %>
+           <%= link_to 'Release Date ↑', movies_path(sort: 'release_date', direction: 'desc') %>
+        <% elsif @sorting_column == 'release_date' && @sorting_type == 'desc' %>          
+           <%= link_to 'Release Date ↓', movies_path(sort: 'release_date', direction: 'asc') %>
+        <% else %>
+          <%= link_to 'Release Date', movies_path(sort: 'release_date', direction: 'desc') %>
+        <% end %>
+      </th>
     </tr>
   </thead>
   <tbody>
     <% @movies.each do |movie| %>
       <tr>
-        <td><%= movie.title %></td>
-        <td><%= movie.rating %></td>
-        <td><%= movie.release_date %></td>
+        <td class="<%= sort_class if @sorting_column == 'title' %>"><%= movie.title %></td>
+        <td class="<%= sort_class if @sorting_column == 'rating' %>"><%= movie.rating %></td>
+        <td class="<%= sort_class if @sorting_column == 'release_date' %>"><%= movie.release_date %></td>
       </tr>
     <% end %>
   </tbody>

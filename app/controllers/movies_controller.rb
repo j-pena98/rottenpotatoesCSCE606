@@ -6,12 +6,13 @@ class MoviesController < ApplicationController
     sorting_column = params[:sort]
     sorting_type = params[:direction]
 
-    sorting_type = ['asc', 'desc'].include?(sorting_type) ? sorting_type : 'asc'
+    @sorting_type = ['asc', 'desc'].include?(sorting_type) ? sorting_type : 'asc'
 
     valid_columns = ['title', 'rating', 'release_date']
-    sorting_column = valid_columns.include?(sorting_column) ? sorting_column : 'title'
+    @sorting_column = valid_columns.include?(sorting_column) ? sorting_column : 'title'
 
-    @movies = Movie.order("#{sorting_column} #{sorting_type}")
+    @movies = Movie.order("#{@sorting_column} #{@sorting_type}")
+  
   end
 
   # GET /movies/1 or /movies/1.json
